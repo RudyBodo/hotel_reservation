@@ -1,0 +1,6 @@
+*.pyc
+*.swp
+*.DS_Store
+*logs.txt
+static/logs.txt
+env
