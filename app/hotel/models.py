@@ -1,33 +1,38 @@
-from app.core db import db
+from app.core.db import db
 from app.reservation.models import Reservation
 
 class City(db.Model):
     #set table name
     __tablename__ = 'city'
     id = db.Column(db.integer, primary_key=True)
+    Hotel_id = db.Column(db.Integer, db.ForeignKey(Hotel.id))
     city = db.Column(db.String(50))
     code = db.Column(db.String(50))
 
-    def __init__(self, city, code):
+    def __init__(self, hotel_id, city, code):
+        self.hotel_id = hotel_id
         self.city = city
         self.code = code
 
     def __repr__(self):
-        return '{City}'.format(self.city = city)
+        return '<City>{}'.format(self.city)
 
 class Province(db.Model):
     #set table name
+    id = db.Column(db.Integer, primary_key=True)
     __tablename__ = 'province'
-    id = db.Column(db.integer, primary_key=True)
+    hotel_id = db.Column(db.Integer, db.ForeignKey(Hotel.id))
     province = db.Column(db.String(50))
     code = db.Column(db.String(50))
 
-    def __init__(self, city, code):
+    def __init__(self, hotel_id, province, code):
+        self.hotel_id = hotel_id
         self.province = province
         self.code = code
 
+
     def __repr__(self):
-        return '{Province}'.format(self.city = city)
+        return '<Province>{}'.format(self.province)
 
 class Country(db.Model):
     #set table name
@@ -36,13 +41,13 @@ class Country(db.Model):
     country = db.Column(db.String(50))
     code = db.Column(db.String(50))
 
-    def __init__(self, city, code):
-        self.country = city
+    def __init__(self, hotel_id, country, code):
+        self.hotel_id = hotel_id
+        self.country = country
         self.code = code
 
     def __repr__(self):
-        return '{Country}'.format(self.city = city)
-        #set table name
+        return '<Country>{}'.format(self.country)
 
 class HotelFacility(db.Mdel):
     __tablename__ = 'hotelfacility'
@@ -58,8 +63,8 @@ class HotelFacility(db.Mdel):
         self.carports = carports
         self.swimmingpool = swimmingpool
 
-    def __repr__:
-    return '{HotelFacility}'.format(self.hotelid = hotelid)
+    def __repr__(self):
+        return '<HotelFacility>{}'.format(self.garage)
 
 class Hotel(db.Model):
 #set table name
@@ -67,31 +72,26 @@ class Hotel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     address = db.Column(db.String(50))
-    zipcode = db.Column(db.Integer)
-    city_id = db.Column(db.Integer, db.ForeignKey(City.id))
+    zipcode = db.Column(db.Integer())
+    city = db.Relationship('City',
+            backref='hotels', lazy=dynamic)
+    province = db.Relationship('Province',
+            backref='hotels', lazy=dynamic)
+    country = db.Relationship('Country',
+            backref='hotels', lazy=dynamic)
     hotelfacility_id = db.Relationship('HotelFacility',
-    city = db.Relationship('city',
-            backref=db.backref('hotels', lazy=dynamic))
-    province_id = db.column(db.Integer, db.ForeignKey(Province.id))
-                        backref='hotels', lazy=dynamic)
-    province = db.Relationship('province',
-                backref=db.backref('hotels', lazy=dynamic))
-    country_id = db.column(db.Integer, db.ForeignKey(Country.id))
-    country = db.Relationship('country',
-                backref=db.backref('hotels', lazy=dynamic))
-    price = db.Column(db.Float)
-    reservation_id = db.Column(db.Integer, db.ForeignKey=(Reservation.id))
+            backref='hotels', lazy=dynamic)
+    price = db.Column(db.Float())
 
     def __init__(self, name, address, zipcode,
                 city_id, province_id, province, country_id, price, reservation_id):
         self.name = name
         self.address = address
         self.zipcode = zipcode
-        self.city_id = city_id
-        self.province_id = province_id
-        self.country_id = country_id
+        self.city = city
+        self.province = province
+        self.country = country
         self.price = price
-        self.reservation_id = reservation_id
 
     def __repr__(self):
-        return {'Hotel'}.format(self.name = name)
+        return '<Hotel>{}'.format(self.name)
