@@ -9,8 +9,6 @@ class User(db.Model):
     address = db.Column(db.String(50))
     phone_number = db.Column(db.Integer)
     password = db.Column(db.String(30))
-    role = db.relationship('Roles', secondary='UserRoles', backref='user',
-                                lazy = 'dynamic')
     profile = db.relationship('Profile', backref='user',
                                 lazy = 'dynamic')
 
@@ -22,7 +20,6 @@ class User(db.Model):
                 self.address = address
                 self.phone_number = phone_number
                 self.password = password
-                self.role = roles
                 self.profile = profile
 
     def __repr__(self):

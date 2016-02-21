@@ -12,14 +12,18 @@ def reg():
         username = reuest.form.get('Username', None)
         fullname = request.form.get('Fullname', None)
         email = request.form.get('Email', None)
-        Address = request.form.get('Address', None)
-        PhoneNumber = request.form.get('PhoneNumber', None)
+        address = request.form.get('Address', None)
+        phonenumber = request.form.get('PhoneNumber', None)
         password = request.form.get('Password')
         roles = request.form.get('Roles', None)
+        added = User(username, fullname, email, address,
+                        phone_number, password, roles)
+        db.session.add(added)
+        db.session.commit()
 
 @user_views.route('/login', methods=['POST'], ['GET'])
 def login():
     if request.method == 'POST':
         username = request.form.get('Username', None)
         password = request.form.get('Password', None)
-        return 'login succes'
+        return 'login success'
