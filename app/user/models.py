@@ -1,4 +1,5 @@
 from app.core.db import db
+from datetime import datetime
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -11,9 +12,11 @@ class User(db.Model):
     password = db.Column(db.String(30))
     profile = db.relationship('Profile', backref='user',
                                 lazy = 'dynamic')
+    created_time = db.Column(db.DateTime, default = datetime.now)
+    lastlogin_time = db.Column(db.DateTime)
 
     def __init__(self, username, fullname, email, address,
-                    phone_number, password, role, profile):
+                    phone_number, password, profile, lastlogin_time):
                 self.username = username
                 self.fullname = fullname
                 self.email = email
@@ -21,6 +24,7 @@ class User(db.Model):
                 self.phone_number = phone_number
                 self.password = password
                 self.profile = profile
+                self.lastlogin_time = lastlogin_time
 
     def __repr__(self):
         return '<User{}>'.format(self.username)

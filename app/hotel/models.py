@@ -5,12 +5,10 @@ class City(db.Model):
     #set table name
     __tablename__ = 'city'
     id = db.Column(db.integer, primary_key=True)
-    Hotel_id = db.Column(db.Integer, db.ForeignKey(Hotel.id))
     city = db.Column(db.String(50))
     code = db.Column(db.String(50))
 
-    def __init__(self, hotel_id, city, code):
-        self.hotel_id = hotel_id
+    def __init__(self, city, code):
         self.city = city
         self.code = code
 
@@ -21,12 +19,10 @@ class Province(db.Model):
     #set table name
     id = db.Column(db.Integer, primary_key=True)
     __tablename__ = 'province'
-    hotel_id = db.Column(db.Integer, db.ForeignKey(Hotel.id))
     province = db.Column(db.String(50))
     code = db.Column(db.String(50))
 
-    def __init__(self, hotel_id, province, code):
-        self.hotel_id = hotel_id
+    def __init__(self, province, code):
         self.province = province
         self.code = code
 
@@ -41,8 +37,7 @@ class Country(db.Model):
     country = db.Column(db.String(50))
     code = db.Column(db.String(50))
 
-    def __init__(self, hotel_id, country, code):
-        self.hotel_id = hotel_id
+    def __init__(self, country, code):
         self.country = country
         self.code = code
 
@@ -84,7 +79,7 @@ class Hotel(db.Model):
     price = db.Column(db.Float())
 
     def __init__(self, name, address, zipcode,
-                city_id, province_id, province, country_id, price, reservation_id):
+                 province, price):
         self.name = name
         self.address = address
         self.zipcode = zipcode
