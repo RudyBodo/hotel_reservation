@@ -22,3 +22,4 @@ def login():
     if request.method == 'POST':
         username = request.form.get('Username', None)
         password = request.form.get('Password', None)
+        return 'login succes'

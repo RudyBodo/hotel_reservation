@@ -7,23 +7,26 @@ class User(db.Model):
     fullname = db.Column(db.String(50))
     email = db.Column(db.String(20))
     address = db.Column(db.String(50))
-    phone_number = db.Column(db.Integer(20))
+    phone_number = db.Column(db.Integer)
     password = db.Column(db.String(30))
-    role = db.Relationship('Roles', secondary='UserRoles', backref='user',
-                                lazy=dynamic)
-    profile = db.Relationship('Profile', backref='user',
-                                lazy=dynamic)
+    role = db.relationship('Roles', secondary='UserRoles', backref='user',
+                                lazy = 'dynamic')
+    profile = db.relationship('Profile', backref='user',
+                                lazy = 'dynamic')
 
-    def __init__(self, username, fullname, email, address, phone_number, password):
+    def __init__(self, username, fullname, email, address,
+                    phone_number, password, role, profile):
                 self.username = username
                 self.fullname = fullname
                 self.email = email
                 self.address = address
                 self.phone_number = phone_number
                 self.password = password
+                self.role = roles
+                self.profile = profile
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '<User{}>'.format(self.username)
 
 class Roles(db.Model):
     __tablename__ = 'roles'
@@ -35,7 +38,7 @@ class Roles(db.Model):
         self.role = role
         self.description = description
 
-    def __repr__(Self):
+    def __repr__(self):
         return '<Roles{}>'.format(self.role)
 
 class UserRoles(db.Model):
@@ -49,11 +52,11 @@ class UserRoles(db.Model):
         self.userid = userid
 
     def __repr__(self):
-        id = db.Column(db.Integer, primary_key=True)
         return '<UserRoles{}>'.format(self.roleid)
 
 class Profile(db.Model):
     __tablename__ = 'profile'
+    id = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.Integer, db.ForeignKey(User.id))
     birthdate = db.Column(db.String(50))
     birthplace = db.Column(db.String(50))

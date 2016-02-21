@@ -1,5 +1,5 @@
 from app.core.db import db
-from datetime impoert datetime
+from datetime import datetime
 
 from.app.user.models import User
 from app.hotel.models import Hotel

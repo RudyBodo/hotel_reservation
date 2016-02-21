@@ -73,14 +73,14 @@ class Hotel(db.Model):
     name = db.Column(db.String(50))
     address = db.Column(db.String(50))
     zipcode = db.Column(db.Integer())
-    city = db.Relationship('City',
-            backref='hotels', lazy=dynamic)
+    city = db.relationship('City',
+            backref='hotels', lazy='dynamic')
     province = db.Relationship('Province',
-            backref='hotels', lazy=dynamic)
-    country = db.Relationship('Country',
-            backref='hotels', lazy=dynamic)
-    hotelfacility_id = db.Relationship('HotelFacility',
-            backref='hotels', lazy=dynamic)
+            backref='hotels', lazy='dynamic')
+    country = db.relationship('Country',
+            backref='hotels', lazy='dynamic')
+    hotelfacility_id = db.relationship('HotelFacility',
+            backref='hotels', lazy='dynamic')
     price = db.Column(db.Float())
 
     def __init__(self, name, address, zipcode,
