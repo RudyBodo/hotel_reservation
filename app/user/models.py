@@ -8,7 +8,7 @@ class User(db.Model):
     fullname = db.Column(db.String(50))
     email = db.Column(db.String(20))
     address = db.Column(db.String(50))
-    phone_number = db.Column(db.Integer)
+    phone_number = db.Column(db.String(12))
     password = db.Column(db.String(30))
     profile = db.relationship('Profile', backref='user',
                                 lazy = 'dynamic')
