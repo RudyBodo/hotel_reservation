@@ -31,7 +31,7 @@ class User(db.Model):
 class Roles(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(10))
+    role = db.Column(db.String(15))
     description = db.Column(db.String(50))
 
     def __init__(self, role, description):
@@ -58,7 +58,7 @@ class Profile(db.Model):
     __tablename__ = 'profile'
     id = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.Integer, db.ForeignKey(User.id))
-    birthdate = db.Column(db.String(50))
+    birthdate = db.Column(db.DateTime)
     birthplace = db.Column(db.String(50))
     gander = db.Column(db.String(50))
 
