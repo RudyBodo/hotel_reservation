@@ -2,5 +2,6 @@
 *.swp
 *.DS_Store
 *logs.txt
+.idea
 static/logs.txt
 env
